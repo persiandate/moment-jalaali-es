@@ -1,12 +1,54 @@
 {
-  "name": "moment-jalaali",
-  "version": "0.7.2",
+  "name": "moment-jalaali-es",
+  "version": "1.0.0",
   "description": "Jalaali (Jalali, Persian, Khorshidi, Shamsi) calendar system plugin for moment.js.",
-  "author": {
-    "name": "Behrang Noruzi Niya",
-    "email": "behrangn@gmail.com"
-  },
   "license": "MIT",
+  "homepage": "https://github.com/persiandate/moment-jalaali-es",
+  "contributors": [
+    "Behrang Noruzi Niya <behrangn@gmail.com>",
+    "Pooya Parsa <pooya@pi0.ir>"
+  ],
+  "main": "dist/moment-jalaali.common.js",
+  "module": "dist/moment-jalaali.es.js",
+  "browser": "dist/moment-jalaali.js",
+  "scripts": {
+    "test": "npm run lint && npm run mocha",
+    "mocha": "mocha --require source-map-support/register test",
+    "lint": "eslint src",
+    "build": "bili -n moment-jalaali"
+  },
+  "bili": {
+    "entry": "src/index.js",
+    "format": [
+      "cjs",
+      "umd",
+      "es"
+    ],
+    "map": true,
+    "compress": "umd",
+    "external": [
+      "moment",
+      "jalaali-js"
+    ]
+  },
+  "dependencies": {
+    "jalaali-js": "^1.0.0",
+    "moment": "^2.19.0"
+  },
+  "devDependencies": {
+    "bili": "^0.18.2",
+    "chai": "^4.0.2",
+    "eslint": "^4.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-html": "^3.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^3.4.2",
+    "source-map-support": "^0.5.0",
+    "standard-version": "^4.2.0"
+  },
   "keywords": [
     "jalaali",
     "jalali",
@@ -16,32 +58,9 @@
     "date",
     "calendar",
     "conversion",
-    "convert"
-  ],
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha --reporter spec --ui bdd --colors --check-leaks test.js",
-    "lint": "eslint index.js && eslint --env mocha --rule 'no-unused-expressions: 0' test.js",
-    "build": "node umd-build.js",
-    "prepublishOnly": "npm run build",
-    "clean": "rimraf build"
-  },
-  "homepage": "https://github.com/behrang/moment-jalaali",
-  "bugs": {
-    "url": "https://github.com/behrang/moment-jalaali/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/behrang/moment-jalaali.git"
-  },
-  "devDependencies": {
-    "chai": "^4.0.2",
-    "eslint": "^4.0.0",
-    "mocha": "^3.4.2"
-  },
-  "dependencies": {
-    "jalaali-js": "^1.0.0",
-    "moment": "^2.18.1",
-    "rimraf": "^2.6.1"
-  }
+    "convert",
+    "es",
+    "esm",
+    "module"
+  ]
 }

@@ -1,8 +1,6 @@
-# moment-jalaali
+# moment-jalaali-es
 
-A Jalaali (Jalali, Persian, Khorshidi, Shamsi) calendar system plugin for moment.js.
-
-[![Build Status](https://travis-ci.org/jalaali/moment-jalaali.png?branch=master)](https://travis-ci.org/jalaali/moment-jalaali)
+A Jalaali (Jalali, Persian, Khorshidi, Shamsi) calendar system plugin for moment.js based on [moment-jalaali](https://github.com/jalaali/moment-jalaali) and ported into ES6.
 
 Jalali calendar is a solar calendar that was used in Persia, variants of which today are still in use in Iran as well as Afghanistan. [Read more on Wikipedia](http://en.wikipedia.org/wiki/Jalali_calendar) or see [Calendar Converter](http://www.fourmilab.ch/documents/calendar/).
 
@@ -12,29 +10,23 @@ Calendar conversion is based on the [algorithm provided by Kazimierz M. Borkowsk
 
 ## Where to use it
 
-Like `momentjs`, `moment-jalaali` works in browser and in Node.js.
+Like `momentjs`, `moment-jalaali-es` works in browser and in Node.js.
 
-### Node.js
+### Usage
 
-```shell
-npm install moment-jalaali
+```bash
+yarn add moment-jalaali-es
+
+# OR
+
+npm install moment-jalaali-es
 ```
-
 
 ```js
-var moment = require('moment-jalaali')
+import moment from 'moment-jalaali-es'
+
 moment().format('jYYYY/jM/jD')
 ```
-
-### Browser
-
-You may use the `node_modules/build/moment-jalaali.js` file.
-
-    <script src="node_modules/moment/moment.min.js"></script>
-    <script src="node_modules/moment-jalaali/build/moment-jalaali.js"></script>
-    <script>
-      moment().format('jYYYY/jM/jD')
-    </script>
 
 ## API
 
@@ -102,6 +94,10 @@ moment.loadPersian([options])
 * persian-modern: modern dialect(مرداد، جمعه، ...)
 
 ## Related Projects
+
+### moment-jalaali
+
+The base of this project which is UMD and single file build is [jalaali/moment-jalaali](https://github.com/jalaali/moment-jalaali).
 
 ### ng-jalali-flat-datepicker
 

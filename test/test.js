@@ -1,105 +1,108 @@
 
-var chai = require('chai')
-  , moment = require('./index')
+/* eslint-disable no-unused-expressions */
+
+const chai = require('chai')
+const moment = require('..')
 
 chai.should()
 
-moment.updateLocale('en'
-, { week:
-    { dow: 6
-    , doy: 12
-    }
-  , longDateFormat:
-    { LT: 'h:mm A'
-    , LTS: 'h:mm:ss A'
-    , L: 'jYYYY/jMM/jDD'
-    , LL: 'jD jMMMM jYYYY'
-    , LLL: 'jD jMMMM jYYYY LT'
-    , LLLL: 'dddd, jD jMMMM jYYYY LT'
-    }
+moment.updateLocale('en', {
+  week:
+  {
+    dow: 6,
+    doy: 12
+  },
+  longDateFormat:
+  {
+    LT: 'h:mm A',
+    LTS: 'h:mm:ss A',
+    L: 'jYYYY/jMM/jDD',
+    LL: 'jD jMMMM jYYYY',
+    LLL: 'jD jMMMM jYYYY LT',
+    LLLL: 'dddd, jD jMMMM jYYYY LT'
   }
-)
+})
 
-describe('moment', function() {
-  describe('#parse', function() {
-    it('should parse gregorian dates', function() {
+describe('moment', function () {
+  describe('#parse', function () {
+    it('should parse gregorian dates', function () {
       var m = moment('1981/8/17 07:10:20', 'YYYY/M/D hh:mm:ss')
       m.format('YYYY-MM-DD hh:mm:ss').should.be.equal('1981-08-17 07:10:20')
       m.milliseconds().should.be.equal(0)
     })
 
-    it('should parse correctly when input is only time', function() {
+    it('should parse correctly when input is only time', function () {
       var m = moment('07:10:20', 'hh:mm:ss')
       m.format('YYYY-MM-DD hh:mm:ss').should.be.equal('0000-01-01 07:10:20')
     })
 
-    it('should parse when only Jalaali year is in the format', function() {
+    it('should parse when only Jalaali year is in the format', function () {
       var m = moment('08 1360 17', 'MM jYYYY DD')
       m.format('YYYY-MM-DD').should.be.equal('1981-08-17')
       m = moment('08 60 17', 'MM jYY DD')
       m.format('YYYY-MM-DD').should.be.equal('1981-08-17')
     })
 
-    it('should parse when only Jalaali month is in the format', function() {
+    it('should parse when only Jalaali month is in the format', function () {
       var m = moment('1981 5 17', 'YYYY jM D')
       m.format('YYYY-MM-DD').should.be.equal('1981-07-17')
     })
 
-    it('should parse when only Jalaali month string is in the format', function() {
+    it('should parse when only Jalaali month string is in the format', function () {
       var m = moment('1981 Amo 17', 'YYYY jMMM D')
       m.format('YYYY-MM-DD').should.be.equal('1981-07-17')
       m = moment('1981 Amordaad 17', 'YYYY jMMMM D')
       m.format('YYYY-MM-DD').should.be.equal('1981-07-17')
     })
 
-    it('should parse when only Jalaali date is in the format', function() {
+    it('should parse when only Jalaali date is in the format', function () {
       var m = moment('1981 26 8', 'YYYY jD M')
       m.format('YYYY-MM-DD').should.be.equal('1981-08-15')
     })
 
-    it('should parse when Jalaali year and month are in the format', function() {
+    it('should parse when Jalaali year and month are in the format', function () {
       var m = moment('17 1360 5', 'D jYYYY jM')
       m.format('YYYY-MM-DD').should.be.equal('1981-07-17')
       m = moment('1392 7', 'jYYYY jM')
       m.format('YYYY-MM-DD').should.be.equal('2013-09-23')
     })
 
-    it('should parse when Jalaali year and date are in the format', function() {
+    it('should parse when Jalaali year and date are in the format', function () {
       var m = moment('26 1360 8', 'jD jYYYY M')
       m.format('YYYY-MM-DD').should.be.equal('1981-08-15')
     })
 
-    it('should parse when Jalaali month and date are in the format', function() {
+    it('should parse when Jalaali month and date are in the format', function () {
       var m = moment('26 1981 5', 'jD YYYY jM')
       m.format('YYYY-MM-DD').should.be.equal('1981-08-17')
     })
 
-    it('should parse when Jalaali year, month and date are in the format', function() {
+    it('should parse when Jalaali year, month and date are in the format', function () {
       var m = moment('26 1360 5', 'jD jYYYY jM')
       m.format('YYYY-MM-DD').should.be.equal('1981-08-17')
     })
 
-    it('should parse with complex format', function() {
+    it('should parse with complex format', function () {
       var m = moment('17 26 50 1981 50 8 12', 'D jD jYYYY YYYY M M jM')
       m.format('YYYY-MM-DD').should.be.equal('1981-08-17')
     })
 
-    it('should parse format result', function() {
-      var f = 'jYYYY/jM/jD hh:mm:ss.SSS a'
-        , m = moment()
+    it('should parse format result', function () {
+      let f = 'jYYYY/jM/jD hh:mm:ss.SSS a'
+      let m = moment()
       moment(m.format(f), f).isSame(m).should.be.true
     })
 
-    it('should be able to parse in utc', function() {
+    it('should be able to parse in utc', function () {
       var m = moment.utc('1360/5/26 07:10:20', 'jYYYY/jM/jD hh:mm:ss')
       m.format('YYYY-MM-DD hh:mm:ss Z').should.be.equal('1981-08-17 07:10:20 +00:00')
     })
 
-    it('should parse with a format array', function() {
-      var p1 = 'jYY jM jD'
-        , p2 = 'jM jD jYY'
-        , p3 = 'jD jYY jM'
-        , m
+    it('should parse with a format array', function () {
+      let p1 = 'jYY jM jD'
+      let p2 = 'jM jD jYY'
+      let p3 = 'jD jYY jM'
+      let m
       m = moment('60 11 12', ['D YY M', 'M D YY', 'YY M D'])
       m.format('YY-MM-DD').should.be.equal('60-11-12')
       m = moment('10 11 12', [p1, p2, p3])
@@ -125,134 +128,134 @@ describe('moment', function() {
     })
   })
 
-  describe('#format', function() {
-    it('should work normally when there is no Jalaali token', function() {
+  describe('#format', function () {
+    it('should work normally when there is no Jalaali token', function () {
       var m = moment('1981-08-17 07:10:20')
       m.format('YYYY-MM-DD hh:mm:ss').should.be.equal('1981-08-17 07:10:20')
     })
 
-    it('should format to Jalaali with Jalaali tokens', function() {
+    it('should format to Jalaali with Jalaali tokens', function () {
       var m = moment('1981-08-17 07:10:20')
       m.format('jYYYY-jMM-jDD hh:mm:ss').should.be.equal('1360-05-26 07:10:20')
     })
 
-    it('should format with escaped and unescaped tokens', function() {
+    it('should format with escaped and unescaped tokens', function () {
       var m = moment('1981-08-17')
       m.format('[My] birt\\h y[ea]r [is] jYYYY or YYYY').should.be.equal('My birth year is 1360 or 1981')
     })
 
-    it('should format with mixed tokens', function() {
+    it('should format with mixed tokens', function () {
       var m = moment('1981-08-17')
       m.format('jYYYY/jMM/jDD = YYYY-MM-DD').should.be.equal('1360/05/26 = 1981-08-17')
     })
 
-    it('should format with jMo', function() {
+    it('should format with jMo', function () {
       var m = moment('1981-08-17')
       m.format('jMo').should.be.equal('5th')
     })
 
-    it('should format with jM', function() {
+    it('should format with jM', function () {
       var m = moment('1981-08-17')
       m.format('jM').should.be.equal('5')
     })
 
-    it('should format with jMM', function() {
+    it('should format with jMM', function () {
       var m = moment('1981-08-17')
       m.format('jMM').should.be.equal('05')
     })
 
-    it('should format with jMMM', function() {
+    it('should format with jMMM', function () {
       var m = moment('1981-08-17')
       m.format('jMMM').should.be.equal('Amo')
     })
 
-    it('should format with jMMMM', function() {
+    it('should format with jMMMM', function () {
       var m = moment('1981-08-17')
       m.format('jMMMM').should.be.equal('Amordaad')
     })
 
-    it('should format with jDo', function() {
+    it('should format with jDo', function () {
       var m = moment('1981-08-17')
       m.format('jDo').should.be.equal('26th')
     })
 
-    it('should format with jD', function() {
+    it('should format with jD', function () {
       var m = moment('1981-08-17')
       m.format('jD').should.be.equal('26')
     })
 
-    it('should format with jDD', function() {
+    it('should format with jDD', function () {
       var m = moment('1981-08-17')
       m.format('jDD').should.be.equal('26')
       m = moment('1981-08-23')
       m.format('jDD').should.be.equal('01')
     })
 
-    it('should format with jDDD', function() {
+    it('should format with jDDD', function () {
       var m = moment('1981-08-17')
       m.format('jDDD').should.be.equal('150')
     })
 
-    it('should format with jDDDo', function() {
+    it('should format with jDDDo', function () {
       var m = moment('1981-08-17')
       m.format('jDDDo').should.be.equal('150th')
     })
 
-    it('should format with jDDDD', function() {
+    it('should format with jDDDD', function () {
       var m = moment('1981-08-17')
       m.format('jDDDD').should.be.equal('150')
       m = moment('1981-03-21')
       m.format('jDDDD').should.be.equal('001')
     })
 
-    it('should format with jwo', function() {
+    it('should format with jwo', function () {
       var m = moment('1981-08-17')
       m.format('jwo').should.be.equal('22nd')
     })
 
-    it('should format with jw', function() {
+    it('should format with jw', function () {
       var m = moment('1981-08-17')
       m.format('jw').should.be.equal('22')
     })
 
-    it('should format with jww', function() {
+    it('should format with jww', function () {
       var m = moment('1981-08-17')
       m.format('jww').should.be.equal('22')
       m = moment('1981-04-23')
       m.format('jww').should.be.equal('05')
     })
 
-    it('should format with jYY', function() {
+    it('should format with jYY', function () {
       var m = moment('1981-08-17')
       m.format('jYY').should.be.equal('60')
     })
 
-    it('should format with jYYYY', function() {
+    it('should format with jYYYY', function () {
       var m = moment('1981-08-17')
       m.format('jYYYY').should.be.equal('1360')
     })
 
-    it('should format with jYYYYY', function() {
+    it('should format with jYYYYY', function () {
       var m = moment('1981-08-17')
       m.format('jYYYYY').should.be.equal('01360')
     })
 
-    it('should format with jgg', function() {
+    it('should format with jgg', function () {
       var m = moment('1981-08-17')
       m.format('jgg').should.be.equal('60')
     })
 
-    it('should format with jgggg', function() {
+    it('should format with jgggg', function () {
       var m = moment('1981-08-17')
       m.format('jgggg').should.be.equal('1360')
     })
 
-    it('should format with jggggg', function() {
+    it('should format with jggggg', function () {
       var m = moment('1981-08-17')
       m.format('jggggg').should.be.equal('01360')
     })
 
-    it('should work with long date formats too', function() {
+    it('should work with long date formats too', function () {
       var m = moment('1981-08-17')
       m.format('LT').should.be.equal('12:00 AM')
       m.format('LTS').should.be.equal('12:00:00 AM')
@@ -265,8 +268,8 @@ describe('moment', function() {
       m.format('LLLL').should.be.equal('Monday, 26 Amordaad 1360 12:00 AM')
       m.format('llll').should.be.equal('Mon, 26 Amo 1360 12:00 AM')
     })
-   
-    it('should work with long date formats too if we have time', function() {
+
+    it('should work with long date formats too if we have time', function () {
       var m = moment('1981-08-17 12:15:45')
       m.format('LT').should.be.equal('12:15 PM')
       m.format('LTS').should.be.equal('12:15:45 PM')
@@ -281,13 +284,13 @@ describe('moment', function() {
     })
   })
 
-  describe('#jYear', function() {
-    it('should return Jalaali year', function() {
+  describe('#jYear', function () {
+    it('should return Jalaali year', function () {
       var m = moment('1981-08-17')
       m.jYear().should.be.equal(1360)
     })
 
-    it('should set Jalaali year', function() {
+    it('should set Jalaali year', function () {
       var m = moment('1981-08-17')
       m.jYear(1392)
       m.format('jYYYY/jM/jD').should.be.equal('1392/5/26')
@@ -297,18 +300,18 @@ describe('moment', function() {
       m.format('jYY/jM/jD').should.be.equal('92/12/29')
     })
 
-    it('should also has jYears alias', function() {
+    it('should also has jYears alias', function () {
       moment.fn.jYear.should.be.equal(moment.fn.jYears)
     })
   })
 
-  describe('#jMonth', function() {
-    it('should return Jalaali month', function() {
+  describe('#jMonth', function () {
+    it('should return Jalaali month', function () {
       var m = moment('1981-08-17')
       m.jMonth().should.be.equal(4)
     })
 
-    it('should set Jalaali month', function() {
+    it('should set Jalaali month', function () {
       var m = moment('1981-08-17')
       m.jMonth(7)
       m.format('jYYYY/jM/jD').should.be.equal('1360/8/26')
@@ -322,18 +325,18 @@ describe('moment', function() {
       m.format('jYY/jM/jD').should.be.equal('92/12/29')
     })
 
-    it('should also has jMonths alias', function() {
+    it('should also has jMonths alias', function () {
       moment.fn.jMonth.should.be.equal(moment.fn.jMonths)
     })
   })
 
-  describe('#jDate', function() {
-    it('should return Jalaali date', function() {
+  describe('#jDate', function () {
+    it('should return Jalaali date', function () {
       var m = moment('1981-08-17')
       m.jDate().should.be.equal(26)
     })
 
-    it('should set Jalaali date', function() {
+    it('should set Jalaali date', function () {
       var m = moment('1981-08-17')
       m.jDate(30)
       m.format('jYYYY/jM/jD').should.be.equal('1360/5/30')
@@ -351,13 +354,13 @@ describe('moment', function() {
       m.format('jYY/jM/jD').should.be.equal('92/3/28')
     })
 
-    it('should also has jDates alias', function() {
+    it('should also has jDates alias', function () {
       moment.fn.jDate.should.be.equal(moment.fn.jDates)
     })
   })
 
-  describe('#jDayOfYear', function() {
-    it('should return Jalaali date of year', function() {
+  describe('#jDayOfYear', function () {
+    it('should return Jalaali date of year', function () {
       var m = moment('1981-08-17')
       m.jDayOfYear().should.be.equal(150)
       m = moment('1981-03-21')
@@ -368,7 +371,7 @@ describe('moment', function() {
       m.jDayOfYear().should.be.equal(366)
     })
 
-    it('should set Jalaali date of year', function() {
+    it('should set Jalaali date of year', function () {
       var m = moment('1981-08-17')
       m.jDayOfYear(30)
       m.format('jYYYY/jM/jD').should.be.equal('1360/1/30')
@@ -387,8 +390,8 @@ describe('moment', function() {
     })
   })
 
-  describe('#jWeek', function() {
-    it('should return Jalaali week of year', function() {
+  describe('#jWeek', function () {
+    it('should return Jalaali week of year', function () {
       var m = moment('1981-08-17')
       m.jWeek().should.be.equal(22)
       m.jDayOfYear(1)
@@ -465,7 +468,7 @@ describe('moment', function() {
       m.jWeek().should.be.equal(53)
     })
 
-    it('should set Jalaali week of year', function() {
+    it('should set Jalaali week of year', function () {
       var m = moment('1981-08-17')
       m.jWeek(1)
       m.format('jYY/jM/jD').should.be.equal('60/1/3')
@@ -484,8 +487,8 @@ describe('moment', function() {
     })
   })
 
-  describe('#jWeekYear', function() {
-    it('should return Jalaali week year', function() {
+  describe('#jWeekYear', function () {
+    it('should return Jalaali week year', function () {
       var m = moment('1981-08-17')
       m.jWeekYear().should.be.equal(1360)
       m.jDayOfYear(1)
@@ -544,7 +547,7 @@ describe('moment', function() {
       m.jWeekYear().should.be.equal(1366)
     })
 
-    it('should set Jalaali week year', function() {
+    it('should set Jalaali week year', function () {
       var m = moment('1981-08-17')
       m.jWeekYear(1361)
       m.format('jYY/jM/jD').should.be.equal('61/5/26')
@@ -559,8 +562,8 @@ describe('moment', function() {
     })
   })
 
-  describe('#startOf', function() {
-    it('should work as expected without jYear and jMonth', function() {
+  describe('#startOf', function () {
+    it('should work as expected without jYear and jMonth', function () {
       var m = moment('1981-08-17 07:10:20')
       m.startOf('year').format('YYYY-MM-DD HH:mm:ss').should.be.equal('1981-01-01 00:00:00')
       m = moment('1981-08-17 07:10:20')
@@ -571,7 +574,7 @@ describe('moment', function() {
       m.startOf('week').format('YYYY-MM-DD HH:mm:ss').should.be.equal('1981-08-15 00:00:00')
     })
 
-    it('should return start of Jalaali year, month and date', function() {
+    it('should return start of Jalaali year, month and date', function () {
       var m = moment('1981-08-17 07:10:20')
       m.startOf('jYear').format('jYYYY-jMM-jDD HH:mm:ss').should.be.equal('1360-01-01 00:00:00')
       m = moment('1981-08-17 07:10:20')
@@ -583,8 +586,8 @@ describe('moment', function() {
     })
   })
 
-  describe('#endOf', function() {
-    it('should work as expected without jYear and jMonth', function() {
+  describe('#endOf', function () {
+    it('should work as expected without jYear and jMonth', function () {
       var m = moment('1981-08-17 07:10:20')
       m.endOf('year').format('YYYY-MM-DD HH:mm:ss').should.be.equal('1981-12-31 23:59:59')
       m = moment('1981-08-17 07:10:20')
@@ -595,7 +598,7 @@ describe('moment', function() {
       m.endOf('week').format('YYYY-MM-DD HH:mm:ss').should.be.equal('1981-08-21 23:59:59')
     })
 
-    it('should return end of Jalaali year, month and date', function() {
+    it('should return end of Jalaali year, month and date', function () {
       var m = moment('1981-08-17 07:10:20')
       m.endOf('jYear').format('jYYYY-jMM-jDD HH:mm:ss').should.be.equal('1360-12-29 23:59:59')
       m = moment('1981-08-17 07:10:20')
@@ -607,10 +610,11 @@ describe('moment', function() {
     })
   })
 
-  describe('#isValid', function() {
-    it('should return true when a valid date is parsed and false otherwise', function() {
-      var jf = 'jYYYY/jMM/jDD'
-        , gf = 'YYYY-MM-DD'
+  describe('#isValid', function () {
+    it('should return true when a valid date is parsed and false otherwise', function () {
+      let jf = 'jYYYY/jMM/jDD'
+      let gf = 'YYYY-MM-DD'
+
       moment('1981-08-17', gf).isValid().should.be.true
       moment('1981-08-31', gf).isValid().should.be.true
       moment('1981-09-31', gf).isValid().should.be.false
@@ -644,10 +648,10 @@ describe('moment', function() {
     })
   })
 
-  describe('#clone', function() {
-    it('should return a cloned instance', function() {
-      var m = moment('1360/5/26', 'jYYYY/jM/jD')
-        , c = m.clone()
+  describe('#clone', function () {
+    it('should return a cloned instance', function () {
+      let m = moment('1360/5/26', 'jYYYY/jM/jD')
+      let c = m.clone()
       m.add(1, 'jYear')
       m.add(4, 'day')
       m.format('jYY/jM/jD').should.be.equal('61/5/30')
@@ -657,8 +661,8 @@ describe('moment', function() {
 
   describe('#add', function () {
     it('should add gregorian dates correctly', function () {
-      var gf = 'YYYY-M-D'
-        , m = moment('1981-8-17', 'YYYY-M-D')
+      let gf = 'YYYY-M-D'
+      let m = moment('1981-8-17', 'YYYY-M-D')
       moment(m).add(1, 'day').format(gf).should.be.equal('1981-8-18')
       moment(m).add(10, 'days').format(gf).should.be.equal('1981-8-27')
       moment(m).add(30, 'days').format(gf).should.be.equal('1981-9-16')
@@ -676,8 +680,8 @@ describe('moment', function() {
     })
 
     it('should add jalaali dates correctly', function () {
-      var jf = 'jYYYY/jM/jD'
-        , m = moment('1360/5/26', 'jYYYY/jM/jD')
+      let jf = 'jYYYY/jM/jD'
+      let m = moment('1360/5/26', 'jYYYY/jM/jD')
       moment(m).add(1, 'day').format(jf).should.be.equal('1360/5/27')
       moment(m).add(4, 'days').format(jf).should.be.equal('1360/5/30')
       moment(m).add(10, 'days').format(jf).should.be.equal('1360/6/5')
@@ -699,8 +703,8 @@ describe('moment', function() {
     })
 
     it('should retain last day of month when adding months or years', function () {
-      var jf = 'jYYYY/jM/jD'
-        , m = moment('1393/6/31', jf)
+      let jf = 'jYYYY/jM/jD'
+      let m = moment('1393/6/31', jf)
       moment(m).add(1, 'jmonth').format(jf).should.be.equal('1393/7/30')
       moment(m).add(5, 'jmonth').format(jf).should.be.equal('1393/11/30')
       moment(m).add(6, 'jmonth').format(jf).should.be.equal('1393/12/29')
@@ -715,8 +719,8 @@ describe('moment', function() {
 
   describe('#subtract', function () {
     it('should subtract gregorian dates correctly', function () {
-      var gf = 'YYYY-M-D'
-        , m = moment('1981-8-17', 'YYYY-M-D')
+      let gf = 'YYYY-M-D'
+      let m = moment('1981-8-17', 'YYYY-M-D')
       moment(m).subtract(1, 'day').format(gf).should.be.equal('1981-8-16')
       moment(m).subtract(10, 'days').format(gf).should.be.equal('1981-8-7')
       moment(m).subtract(30, 'days').format(gf).should.be.equal('1981-7-18')
@@ -734,8 +738,8 @@ describe('moment', function() {
     })
 
     it('should subtract jalaali dates correctly', function () {
-      var jf = 'jYYYY/jM/jD'
-        , m = moment('1360/5/26', 'jYYYY/jM/jD')
+      let jf = 'jYYYY/jM/jD'
+      let m = moment('1360/5/26', 'jYYYY/jM/jD')
       moment(m).subtract(1, 'day').format(jf).should.be.equal('1360/5/25')
       moment(m).subtract(4, 'days').format(jf).should.be.equal('1360/5/22')
       moment(m).subtract(10, 'days').format(jf).should.be.equal('1360/5/16')
@@ -757,8 +761,8 @@ describe('moment', function() {
     })
 
     it('should retain last day of month when subtracting months or years', function () {
-      var jf = 'jYYYY/jM/jD'
-        , m = moment('1393/1/31', jf)
+      let jf = 'jYYYY/jM/jD'
+      let m = moment('1393/1/31', jf)
       moment(m).subtract(1, 'jmonth').format(jf).should.be.equal('1392/12/29')
       moment(m).subtract(6, 'jmonth').format(jf).should.be.equal('1392/7/30')
       moment(m).subtract(7, 'jmonth').format(jf).should.be.equal('1392/6/31')
@@ -771,8 +775,8 @@ describe('moment', function() {
     })
 
     it('should subtract months correctly', function () {
-      var jf = 'jYYYY/jM/jD'
-        , m = moment('1393/1/31', jf)
+      let jf = 'jYYYY/jM/jD'
+      let m = moment('1393/1/31', jf)
       moment(m).subtract(1, 'jmonth').format(jf).should.be.equal('1392/12/29')
       moment(m).subtract(2, 'jmonth').format(jf).should.be.equal('1392/11/30')
       moment(m).subtract(7, 'jmonth').format(jf).should.be.equal('1392/6/31')
@@ -798,8 +802,8 @@ describe('moment', function() {
     })
   })
 
-  describe('.jIsLeapYear', function() {
-    it('should return true for Jalaali leap years and false otherwise', function() {
+  describe('.jIsLeapYear', function () {
+    it('should return true for Jalaali leap years and false otherwise', function () {
       moment.jIsLeapYear(1391).should.be.true
       moment.jIsLeapYear(1392).should.be.false
       moment.jIsLeapYear(1393).should.be.false
@@ -817,10 +821,10 @@ describe('moment', function() {
     })
   })
 
-  describe('.loadPersian', function() {
-    it('should load Persian lang', function() {
-      var ol = moment.locale()
-        , m
+  describe('.loadPersian', function () {
+    it('should load Persian lang', function () {
+      let ol = moment.locale()
+      let m
       moment.loadPersian()
       m = moment('1981-08-17')
       m.format('D MMMM YYYY').should.be.equal('17 اوت 1981')
@@ -832,11 +836,11 @@ describe('moment', function() {
     })
   })
 
-  describe('.loadPersian({usePersianDigits: true})', function() {
-    it('should load Persian lang with usePersianDigits = true', function() {
-      var ol = moment.locale()
-        , m
-      moment.loadPersian({usePersianDigits: true})
+  describe('.loadPersian({usePersianDigits: true})', function () {
+    it('should load Persian lang with usePersianDigits = true', function () {
+      let ol = moment.locale()
+      let m
+      moment.loadPersian({ usePersianDigits: true })
       m = moment('1981-08-17')
       m.format('D MMMM YYYY').should.be.equal('۱۷ اوت ۱۹۸۱')
       m.format('jD jMMMM jYYYY').should.be.equal('۲۶ امرداد ۱۳۶۰')
@@ -847,11 +851,11 @@ describe('moment', function() {
     })
   })
 
-  describe('.loadPersian({dialect: persian-modern})', function() {
-    it('should load Persian lang with dialect = persian-modern', function() {
-      var ol = moment.locale()
-        , m
-      moment.loadPersian({dialect: 'persian-modern'})
+  describe('.loadPersian({dialect: persian-modern})', function () {
+    it('should load Persian lang with dialect = persian-modern', function () {
+      let ol = moment.locale()
+      let m
+      moment.loadPersian({ dialect: 'persian-modern' })
       m = moment('1981-08-21')
       m.format('D MMMM YYYY').should.be.equal('21 اوت 1981')
       m.format('jD jMMMM jYYYY').should.be.equal('30 مرداد 1360')
