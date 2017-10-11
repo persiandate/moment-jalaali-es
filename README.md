@@ -1,5 +1,5 @@
 # moment-jalaali-es
-
+<br>
 <a href="https://github.com/persiandate/moment-jalaali-es">
     <img alt="" src="https://david-dm.org/persiandate/moment-jalaali-es.svg?style=flat-square">
 </a>
@@ -15,14 +15,12 @@
 <a href="https://circleci.com/gh/persiandate/moment-jalaali-es">
     <img alt="" src="https://img.shields.io/circleci/project/github/persiandate/moment-jalaali-es.svg?style=flat-square">
 </a>
+<br>
 
-A Jalaali (Jalali, Persian, Khorshidi, Shamsi) calendar system plugin for moment.js based on [moment-jalaali](https://github.com/jalaali/moment-jalaali) and ported into ES6.
+> Jalali calendar is a solar calendar that was used in Persia, variants of which today are still in use in Iran as well as Afghanistan. [Read more on Wikipedia](http://en.wikipedia.org/wiki/Jalali_calendar) or see [Calendar Converter](http://www.fourmilab.ch/documents/calendar/). Calendar conversion is based on the [algorithm provided by Kazimierz M. Borkowski](http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm) and has a very good performance.
 
-Jalali calendar is a solar calendar that was used in Persia, variants of which today are still in use in Iran as well as Afghanistan. [Read more on Wikipedia](http://en.wikipedia.org/wiki/Jalali_calendar) or see [Calendar Converter](http://www.fourmilab.ch/documents/calendar/).
 
-This plugin adds Jalaali calendar support to [momentjs](http://momentjs.com) library.
-
-Calendar conversion is based on the [algorithm provided by Kazimierz M. Borkowski](http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm) and has a very good performance.
+A Jalaali (Jalali, Persian, Khorshidi, Shamsi) calendar system plugin for moment.js based on [moment-jalaali](https://github.com/jalaali/moment-jalaali). This plugin adds Jalaali calendar support to [momentjs](http://momentjs.com) library.
 
 ## Where to use it
 
