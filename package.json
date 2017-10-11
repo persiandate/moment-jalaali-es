@@ -17,6 +17,10 @@
     "lint": "eslint src",
     "build": "bili -n moment-jalaali"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "bili": {
     "entry": "src/index.js",
     "format": [
