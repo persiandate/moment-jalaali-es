@@ -15,7 +15,9 @@
     "test": "npm run lint && npm run mocha",
     "mocha": "mocha --require source-map-support/register test",
     "lint": "eslint src",
-    "build": "bili -n moment-jalaali"
+    "build": "bili -n moment-jalaali",
+    "prepare": "npm run build && npm run test",
+    "release": "standard-version && git push --follow-tags && npm publish"
   },
   "files": [
     "dist",
