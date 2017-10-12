@@ -10,7 +10,7 @@ export function makeFormatFunction (format) {
     }
   }
 
-  return function (mom) {
+  return mom => {
     let output = ''
     for (let i = 0; i < length; i += 1) {
       output += array[i] instanceof Function ? '[' + array[i].call(mom, format) + ']' : array[i]

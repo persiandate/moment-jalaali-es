@@ -40,7 +40,9 @@ extend(getPrototypeOf(moment.localeData()),
     },
 
     jMonthsParse (monthName) {
-      let i, mom, regex
+      let i
+      let mom
+      let regex
       if (!this._jMonthsParse) {
         this._jMonthsParse = []
       }

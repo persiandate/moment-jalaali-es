@@ -77,9 +77,7 @@ export function mod (a, b) {
 
 export function fixFormat (format, _moment) {
   let i = 5
-  let replace = function (input) {
-    return _moment.localeData().longDateFormat(input) || input
-  }
+  let replace = input => _moment.localeData().longDateFormat(input) || input
   while (i > 0 && localFormattingTokens.test(format)) {
     i -= 1
     format = format.replace(localFormattingTokens, replace)

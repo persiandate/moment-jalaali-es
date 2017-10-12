@@ -13,13 +13,9 @@ export default function jMoment (input, format, lang, strict) {
 extend(jMoment, moment)
 jMoment.fn = objectCreate(moment.fn)
 
-jMoment.utc = function (input, format, lang, strict) {
-  return makeMoment(input, format, lang, strict, true)
-}
+jMoment.utc = (input, format, lang, strict) => makeMoment(input, format, lang, strict, true)
 
-jMoment.unix = function (input) {
-  return makeMoment(input * 1000)
-}
+jMoment.unix = input => makeMoment(input * 1000)
 
 /************************************
      Prototype
@@ -38,7 +34,9 @@ jMoment.fn.format = function (format) {
 }
 
 jMoment.fn.jYear = function (input) {
-  let lastDay, j, g
+  let lastDay
+  let j
+  let g
   if (typeof input === 'number') {
     j = toJalaali(this.year(), this.month(), this.date())
     lastDay = Math.min(j.jd, jMoment.jDaysInMonth(input, j.jm))
@@ -52,7 +50,9 @@ jMoment.fn.jYear = function (input) {
 }
 
 jMoment.fn.jMonth = function (input) {
-  let lastDay, j, g
+  let lastDay
+  let j
+  let g
   if (input != null) {
     if (typeof input === 'string') {
       input = this.lang().jMonthsParse(input)
@@ -78,7 +78,8 @@ jMoment.fn.jMonth = function (input) {
 }
 
 jMoment.fn.jDate = function (input) {
-  let j, g
+  let j
+  let g
   if (typeof input === 'number') {
     j = toJalaali(this.year(), this.month(), this.date())
     g = toGregorian(j.jy, j.jm, input)
@@ -187,7 +188,7 @@ jMoment.fn.jWeeks = jMoment.fn.jWeek
  Statics
 ************************************/
 
-jMoment.jDaysInMonth = function (year, month) {
+jMoment.jDaysInMonth = (year, month) => {
   year += div(month, 12)
   month = mod(month, 12)
   if (month < 0) {
@@ -207,7 +208,7 @@ jMoment.jDaysInMonth = function (year, month) {
 
 jMoment.jIsLeapYear = jalaali.isLeapJalaaliYear
 
-jMoment.loadPersian = function (args) {
+jMoment.loadPersian = args => {
   let usePersianDigits = args !== undefined && args.hasOwnProperty('usePersianDigits') ? args.usePersianDigits : false
   let dialect = args !== undefined && args.hasOwnProperty('dialect') ? args.dialect : 'persian'
   moment.locale('fa', null)
@@ -265,17 +266,13 @@ jMoment.loadPersian = function (args) {
             },
       preparse (string) {
         if (usePersianDigits) {
-          return string.replace(/[۰-۹]/g, function (match) {
-            return numberMap[match]
-          }).replace(/،/g, ',')
+          return string.replace(/[۰-۹]/g, match => numberMap[match]).replace(/،/g, ',')
         }
         return string
       },
       postformat (string) {
         if (usePersianDigits) {
-          return string.replace(/\d/g, function (match) {
-            return symbolMap[match]
-          }).replace(/,/g, '،')
+          return string.replace(/\d/g, match => symbolMap[match]).replace(/,/g, '،')
         }
         return string
       },
@@ -303,6 +300,6 @@ jMoment.loadPersian = function (args) {
 }
 
 jMoment.jConvert = {
-  toJalaali: toJalaali,
-  toGregorian: toGregorian
+  toJalaali,
+  toGregorian
 }
