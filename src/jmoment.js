@@ -17,7 +17,7 @@ jMoment.utc = (input, format, lang, strict) => makeMoment(input, format, lang, s
 jMoment.unix = input => makeMoment(input * 1000)
 
 // Helpers
-export function jWeekOfYear (mom, firstDayOfWeek, firstDayOfWeekOfYear) {
+function jWeekOfYear (mom, firstDayOfWeek, firstDayOfWeekOfYear) {
   let end = firstDayOfWeekOfYear - firstDayOfWeek
   let daysToDayOfWeek = firstDayOfWeekOfYear - mom.day()
   let adjustedMoment

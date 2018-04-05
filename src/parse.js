@@ -17,7 +17,7 @@ import makeMoment from './make-moment'
 import jMoment from './jmoment'
 import { toGregorian, toJalaali } from './jalaali'
 
-export function getParseRegexForToken (token, config) {
+function getParseRegexForToken (token, config) {
   switch (token) {
     case 'jDDDD':
       return parseTokenThreeDigits
@@ -83,7 +83,7 @@ export function getParseRegexForToken (token, config) {
   }
 }
 
-export function addTimeToArrayFromToken (token, input, config) {
+function addTimeToArrayFromToken (token, input, config) {
   let a
   let datePartArray = config._a
 
@@ -113,7 +113,7 @@ export function addTimeToArrayFromToken (token, input, config) {
   if (input == null) { config._isValid = false }
 }
 
-export function dateFromArray (config) {
+function dateFromArray (config) {
   let g
   let j
   let jy = config._a[0]

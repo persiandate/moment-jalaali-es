@@ -72,7 +72,7 @@ export default function makeMoment (input, format, lang, strict, utc) {
 }
 
 // Parse Utils
-export function getParseRegexForToken (token, config) {
+function getParseRegexForToken (token, config) {
   switch (token) {
     case 'jDDDD':
       return parseTokenThreeDigits
@@ -138,7 +138,7 @@ export function getParseRegexForToken (token, config) {
   }
 }
 
-export function addTimeToArrayFromToken (token, input, config) {
+function addTimeToArrayFromToken (token, input, config) {
   let a
   let datePartArray = config._a
 
@@ -168,7 +168,7 @@ export function addTimeToArrayFromToken (token, input, config) {
   if (input == null) { config._isValid = false }
 }
 
-export function dateFromArray (config) {
+function dateFromArray (config) {
   let g
   let j
   let jy = config._a[0]
@@ -189,7 +189,7 @@ export function dateFromArray (config) {
   return [g.gy, g.gm, g.gd]
 }
 
-export function makeDateFromStringAndFormat (config) {
+function makeDateFromStringAndFormat (config) {
   let tokens = config._f.match(formattingTokens)
   let string = config._i + ''
   let len = tokens.length
@@ -209,7 +209,7 @@ export function makeDateFromStringAndFormat (config) {
   return dateFromArray(config)
 }
 
-export function makeDateFromStringAndArray (config, utc) {
+function makeDateFromStringAndArray (config, utc) {
   let len = config._f.length
   let i
   let format
@@ -241,7 +241,7 @@ export function makeDateFromStringAndArray (config, utc) {
   return bestMoment
 }
 
-export function removeParsedTokens (config) {
+function removeParsedTokens (config) {
   let string = config._i + ''
   let input = ''
   let format = ''
