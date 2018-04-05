@@ -8,9 +8,9 @@
     "Behrang Noruzi Niya <behrangn@gmail.com>",
     "Pooya Parsa <pooya@pi0.ir>"
   ],
-  "main": "dist/moment-jalaali.common.js",
-  "module": "dist/moment-jalaali.es.js",
-  "browser": "dist/moment-jalaali.js",
+  "main": "dist/moment-jalaali-es.cjs.js",
+  "module": "dist/moment-jalaali-es.es.js",
+  "browser": "dist/moment-jalaali-es.js",
   "scripts": {
     "test": "npm run lint && npm run mocha",
     "mocha": "mocha --require source-map-support/register test",
