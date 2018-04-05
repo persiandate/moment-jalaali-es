@@ -30,11 +30,11 @@ Like `momentjs`, `moment-jalaali-es` works in browser and in Node.js.
 ### Usage
 
 ```bash
-yarn add moment-jalaali-es
+yarn add moment-jalaali-es moment
 
 # OR
 
-npm install moment-jalaali-es
+npm install moment-jalaali-es moment
 ```
 
 ```js
