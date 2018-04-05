@@ -1,7 +1,6 @@
 import { leftZeroFill } from './utils'
 
 export const formattingTokens = /(\[[^[]*\])|(\\)?j(Mo|MM?M?M?|Do|DDDo|DD?D?D?|w[o|w]?|YYYYY|YYYY|YY|gg(ggg?)?|)|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|SS?S?|X|zz?|ZZ?|.)/g
-export const localFormattingTokens = /(\[[^[]*\])|(\\)?(LTS?|LL?L?L?|l{1,4})/g
 export const parseTokenOneOrTwoDigits = /\d\d?/
 export const parseTokenOneToThreeDigits = /\d{1,3}/
 export const parseTokenThreeDigits = /\d{3}/
@@ -36,13 +35,6 @@ export const numberMap = {
   '۸': '8',
   '۹': '9',
   '۰': '0'
-}
-
-export const unitAliases = {
-  jm: 'jmonth',
-  jmonths: 'jmonth',
-  jy: 'jyear',
-  jyears: 'jyear'
 }
 
 export const formatFunctions = {}

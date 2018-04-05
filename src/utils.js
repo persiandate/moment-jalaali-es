@@ -1,4 +1,11 @@
-import { unitAliases, localFormattingTokens } from './constants'
+export const localFormattingTokens = /(\[[^[]*\])|(\\)?(LTS?|LL?L?L?|l{1,4})/g
+
+export const unitAliases = {
+  jm: 'jmonth',
+  jmonths: 'jmonth',
+  jy: 'jyear',
+  jyears: 'jyear'
+}
 
 export function extend (a, b) {
   let key
