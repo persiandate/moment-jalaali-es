@@ -4,7 +4,6 @@ import makeMoment from './make-moment'
 import { toJalaali, toGregorian, jalaali } from './jalaali'
 import { makeFormatFunction } from './format'
 import { formatFunctions, numberMap, symbolMap } from './constants'
-import { jWeekOfYear } from './week'
 
 export default function jMoment (input, format, lang, strict) {
   return makeMoment(input, format, lang, strict, false)
@@ -17,9 +16,29 @@ jMoment.utc = (input, format, lang, strict) => makeMoment(input, format, lang, s
 
 jMoment.unix = input => makeMoment(input * 1000)
 
-/************************************
-     Prototype
-************************************/
+// Helpers
+export function jWeekOfYear (mom, firstDayOfWeek, firstDayOfWeekOfYear) {
+  let end = firstDayOfWeekOfYear - firstDayOfWeek
+  let daysToDayOfWeek = firstDayOfWeekOfYear - mom.day()
+  let adjustedMoment
+
+  if (daysToDayOfWeek > end) {
+    daysToDayOfWeek -= 7
+  }
+
+  if (daysToDayOfWeek < end - 7) {
+    daysToDayOfWeek += 7
+  }
+
+  adjustedMoment = jMoment(mom).add(daysToDayOfWeek, 'd')
+
+  return {
+    week: Math.ceil(adjustedMoment.jDayOfYear() / 7),
+    year: adjustedMoment.jYear()
+  }
+}
+
+// Prototype
 
 jMoment.fn.format = function (format) {
   if (format) {
@@ -184,9 +203,7 @@ jMoment.fn.jMonths = jMoment.fn.jMonth
 jMoment.fn.jDates = jMoment.fn.jDate
 jMoment.fn.jWeeks = jMoment.fn.jWeek
 
-/************************************
- Statics
-************************************/
+// Statics
 
 jMoment.jDaysInMonth = (year, month) => {
   year += div(month, 12)
